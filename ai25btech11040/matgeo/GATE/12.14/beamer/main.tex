@@ -2,7 +2,7 @@
 \usepackage{amsmath}
 \usepackage{gvv}
 
-\title{Question 5.2.3}
+\title{Question 12.14}
 \author{AI25BTECH11040 - Vivaan Parashar}
 \date{\today}
 
@@ -12,45 +12,62 @@
 
 \begin{frame}
     \frametitle{Question: }
-    Solve the following system of linear equations:
-    \begin{align*}
-        9x + 3y + 12 = 0\\
-        18x + 6y + 24 = 0
-    \end{align*}
+    4-point DFT of a real discrete-time signal $x[n]$ of length 4 is given by $X[k]$, $n = 0, 1, 2, 3$ and $k = 0, 1, 2, 3$. It is given that $X[0] = 5$, $X[1] = 1 + j1$, $X[2] = 0.5$. $X[3]$ and $x[0]$ respectively are
+    \begin{multicols}{2}
+        \begin{enumerate}[label=\alph*)]
+            \item $1 - j$, 1.875
+            \item $1 - j$, 1.500
+            \item $1 + j$, 1.875
+            \item $0.1 - j0.1$, 1.500
+        \end{enumerate}
+    \end{multicols}
 \end{frame}
 
 \begin{frame}
     \frametitle{Solution: }
-    The given equations can be rewritten as:
-    \begin{align}
-        9x + 3y  & = -12 \\
-        18x + 6y & = -24
-    \end{align}
-    We can represent this system of equations in matrix form as:
-    \begin{align}
-        \vec{M}\vec{X} = \vec{D} \\
-        \implies \myvec{9 & 3    \\ 18 & 6} \myvec{x \\ y} = \myvec{-12 \\ -24}
-    \end{align}
-    To obtain values of $x$ and $y$, we can multiply both sides by the inverse of the coefficient matrix on the left side, but in this case, the coefficient matrix has a rank of 1 ($R_2 = 2R_1$). This implies that either the system has no solutions or infinite solutions.\\
-    If the system has infinite solution, then the rank of the augmented matrix $\myvec{\vec{M} & \vec{D}}$ should also have a rank of 1.
+    Since our sequence is of length $n=4$, let us denote $\omega_n = e^{-j\frac{2\pi}{4}} = -j$. The DFT matrix thus formed is:
+    \[W_4 = \myvec{
+            1 & 1 & 1 & 1\\
+            1 & \omega_n & \omega_n^2 & \omega_n^3\\
+            1 & \omega_n^2 & \omega_n^4 & \omega_n^6\\
+            1 & \omega_n^3 & \omega_n^6 & \omega_n^9
+        } = \myvec{
+            1 & 1 & 1 & 1\\
+            1 & -j & -1 & j\\
+            1 & -1 & 1 & -1\\
+            1 & j & -1 & -j
+        }\]
+    The inverse DFT matrix is given by:
+    \[
+        W_4^{-1} = \frac{1}{4} W_4^\mathrm{H} = \frac{1}{4} \myvec{
+            1 & 1 & 1 & 1\\
+            1 & j & -1 & -j\\
+            1 & -1 & 1 & -1\\
+            1 & -j & -1 & j
+        }\]
 \end{frame}
 \begin{frame}
-    \begin{align}
-        \rank(\myvec{\vec{M}            & \vec{D}}) = \rank(\myvec{9 & 3   & -12 \\ 18 & 6 & -24})\\
-        \myvec{9                        & 3                          & -12       \\ 18 & 6 & -24} \xleftrightarrow{R_2 = R_2 - 2R_1} \myvec{9 & 3 & -12 \\ 0 & 0 & 0}\\
-        \therefore \rank(\myvec{\vec{M} & \vec{D}}) = 1
-    \end{align}
-    Therefore, this system of equations has infinite solutions, which are all values of $(x, y) \in \mathbb{R}^2$ that satisfy the equation $3x + y = -4$.\\
+    (Here $A^\mathrm{H}$ denotes the Hermitian transpose of matrix A, ie the conjugate transpose of A).
+    To get the DFT of our sequence, we use the formula:
+    $\vec{X} = W_4\vec{x}$ or $\vec{x} = W_4^{-1}\vec{X}$ to get our sequence from our DFT.
+    We know $X$ = $\myvec{5\\1+j\\0.5\\X[3]}$.
+    Calculating $x[0]$:
+    \[x[0] = \frac{1}{4} (5 + (1+j) + 0.5 + X[3]) = \frac{6.5 + j + X[3]}{4}\]
+    Since $x[0]$ is real, the imaginary part must be zero. Thus, the imaginary part of $X[3]$ must be $-j$. Therefore, $X[3] = a - j$ where $a$ is a real number.
+    Calculating $x[1]$:
+    \[x[1] = \frac{1}{4} (5 + j(1+j) - 0.5 - j(a - j)) = \frac{4.5 + (1 - a)j}{4}\]
+    Calculating $x[2]$:
+    \[x[2] = \frac{1}{4} (5 - (1+j) + 0.5 + (a - j)) = \frac{4.5 + (a - 1) - 2j}{4}\]
 \end{frame}
-
 \begin{frame}
-    \frametitle{Plot: }
-    \begin{figure}[h!]
-        \centering
-        \includegraphics[width=0.9\columnwidth]{../figs/plot.png}
-        \caption{Graph of line representing all possible solutions}
-        \label{fig:5.2.3}
-    \end{figure}
+    Calculating $x[3]$:
+    \[x[3] = \frac{1}{4} (5 - j(1+j) - 0.5 + j(a - j)) = \frac{4.5 + (a - 1)j}{4}\]
+    Since $x[n]$ is real for all values of n, the imaginary parts of $x[1]$ and $x[3]$ must be zero. Thus, we have:
+    \[1 - a = 0 \implies a = 1\]
+    Thus, $X[3] = 1 - j$.
+    Calculating $x[0]$:
+    \[x[0] = \frac{6.5 + j + (1 - j)}{4} = \frac{7.5}{4} = 1.875\]
+    Thus, the correct option is (a) $X[3] = 1 - j$ and $x[0] = 1.875$.
 \end{frame}
 
 \end{document}
