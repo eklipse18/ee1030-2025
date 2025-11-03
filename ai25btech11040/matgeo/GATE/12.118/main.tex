@@ -1,0 +1,51 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{gvv}
+
+\title{Question 12.118}
+\author{AI25BTECH11040 - Vivaan Parashar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Question: }
+The eigenvalues of the matrix, $\vec{A}^{-1}$, where $\vec{A} = \myvec{2 & 1\\ 0 & 3}$ are
+\begin{multicols}{2}
+    \begin{enumerate}[label=\alph*)]
+        \item 1 and 1/2
+        \item 1 and 1/3
+        \item 2 and 3
+        \item 1/2 and 1/3
+    \end{enumerate}
+\end{multicols}
+
+\section{Solution: }
+The eigenvalues of a matrix $\vec{A}$ are given by the roots of the characteristic polynomial, which is defined as:
+\[\text{det}(\vec{A} - \lambda \vec{I}) = 0\]
+where $\lambda$ represents the eigenvalues and $\vec{I}$ is the identity matrix of the same size as $\vec{A}$ ($\vec{I}_2$).
+
+To find the eigenvalues of $\vec{A}^{-1}$, we can use the property that the eigenvalues of the inverse of a matrix are the reciprocals of the eigenvalues of the original matrix.
+This can be proven using the fact
+\begin{align*}
+\vec{A}\vec{v} = \lambda \vec{v} &\implies \vec{A}^{-1}\vec{A}\vec{v} = \vec{A}^{-1}(\lambda \vec{v}) \\
+&\implies \vec{v} = \lambda \vec{A}^{-1}\vec{v} \\
+&\implies \vec{A}^{-1}\vec{v} = \left(\frac{1}{\lambda}\right) \vec{v}
+\end{align*}
+Therefore, we first need to find the eigenvalues of $\vec{A}$.
+
+The characteristic polynomial of $\vec{A}$ is given by:
+\[\text{det}(\vec{A} - \lambda \vec{I}) = \text{det}\left|\myvec{2 - \lambda & 1\\ 0 & 3 - \lambda}\right| = (2 - \lambda)(3 - \lambda) - 0 = (2 - \lambda)(3 - \lambda)\]
+Setting this equal to zero gives us the eigenvalues of $\vec{A}$:
+\[(2 - \lambda)(3 - \lambda) = 0\]
+Thus, the eigenvalues of $\vec{A}$ are $\lambda_1 = 2$ and $\lambda_2 = 3$.
+
+Now, the eigenvalues of $\vec{A}^{-1}$ are the reciprocals of these eigenvalues:
+\[\mu_1 = \frac{1}{\lambda_1} = \frac{1}{2}, \quad \mu_2 = \frac{1}{\lambda_2} = \frac{1}{3}\]
+
+Therefore, the eigenvalues of $\vec{A}^{-1}$ are $\frac{1}{2}$ and $\frac{1}{3}$.
+The correct answer is option (d): 1/2 and 1/3.
+\end{document}
