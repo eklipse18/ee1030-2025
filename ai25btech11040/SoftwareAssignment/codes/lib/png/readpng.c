@@ -317,14 +317,14 @@ int **readpng(const char *filename, int ihdr_[7]) {
       }
     }
   }
-  printf("Array data:\n");
-  for (int i = 0; i < ihdr[1]; i++) {
-    for (int j = 0; j < ihdr[0]; j++) {
-      printf("\x1B[48;5;%dm  \x1B[0m",
-             232 + (array[i][j]) * 23 / ((1 << bd) - 1));
-    }
-    printf("\n");
-  }
+  // printf("Array data:\n");
+  // for (int i = 0; i < ihdr[1]; i++) {
+  //   for (int j = 0; j < ihdr[0]; j++) {
+  //     printf("\x1B[48;5;%dm  \x1B[0m",
+  //            232 + (array[i][j]) * 23 / ((1 << bd) - 1));
+  //   }
+  //   printf("\n");
+  // }
 
   /* Section for various error labels */
   if (0) {
