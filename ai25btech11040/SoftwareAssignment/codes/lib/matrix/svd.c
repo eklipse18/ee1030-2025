@@ -193,53 +193,53 @@ double *** svd(int m, int n, double **A) {
     return ret;
 }
 
-// DEBUG
-int main(void) {
-    double **A = (double **)malloc(3 * sizeof(double *));
-    A[0] = (double []){1, 2, 3};
-    A[1] = (double []){4, 5, 6};
-    A[2] = (double []){7, 8, 9};
-    double *** svd_result = svd(3, 3, A);
-    // Print svd_result here
-    if (svd_result[0] && svd_result[1] && svd_result[2]) {
-        // DEBUG
-        // printf("SVD computed (placeholders)\n");
-        // printf("U:\n");
-        // for (int i = 0; i < 3; i++) {
-        //     for (int j = 0; j < 3; j++) {
-        //         printf("%f ", svd_result[0][i][j]);
-        //     }
-        //     printf("\n");
-        // }
-        // printf("S:\n");
-        // for (int i = 0; i < 3; i++) {
-        //     for (int j = 0; j < 3; j++) {
-        //         printf("%f ", svd_result[1][i][j]);
-        //     }
-        //     printf("\n");
-        // }
-        // printf("V:\n");
-        // for (int i = 0; i < 3; i++) {
-        //     for (int j = 0; j < 3; j++) {
-        //         printf("%f ", svd_result[2][i][j]);
-        //     }
-        //     printf("\n");
-        // }
+// // DEBUG
+// int main(void) {
+//     double **A = (double **)malloc(3 * sizeof(double *));
+//     A[0] = (double []){1, 2, 3};
+//     A[1] = (double []){4, 5, 6};
+//     A[2] = (double []){7, 8, 9};
+//     double *** svd_result = svd(3, 3, A);
+//     // Print svd_result here
+//     if (svd_result[0] && svd_result[1] && svd_result[2]) {
+//         // DEBUG
+//         // printf("SVD computed (placeholders)\n");
+//         // printf("U:\n");
+//         // for (int i = 0; i < 3; i++) {
+//         //     for (int j = 0; j < 3; j++) {
+//         //         printf("%f ", svd_result[0][i][j]);
+//         //     }
+//         //     printf("\n");
+//         // }
+//         // printf("S:\n");
+//         // for (int i = 0; i < 3; i++) {
+//         //     for (int j = 0; j < 3; j++) {
+//         //         printf("%f ", svd_result[1][i][j]);
+//         //     }
+//         //     printf("\n");
+//         // }
+//         // printf("V:\n");
+//         // for (int i = 0; i < 3; i++) {
+//         //     for (int j = 0; j < 3; j++) {
+//         //         printf("%f ", svd_result[2][i][j]);
+//         //     }
+//         //     printf("\n");
+//         // }
 
-        // DEBUG
-        // test reconstruction A = U * S * V^T
-        // double **Vt = transpose(3, 3, svd_result[2]);
-        // double **US = multiply(3, 3, svd_result[0], 3, 3, svd_result[1]);
-        // double **A_reconstructed = multiply(3, 3, US, 3, 3, Vt);
-        // printf("Reconstructed A:\n");
-        // for (int i = 0; i < 3; i++) {
-        //     for (int j = 0; j < 3; j++) {
-        //         printf("%f ", A_reconstructed[i][j]);
-        //     }
-        //     printf("\n");
-        // }
-    } else {
-        printf("SVD computation failed\n");
-    }
-    return 0;
-}
+//         // DEBUG
+//         // test reconstruction A = U * S * V^T
+//         // double **Vt = transpose(3, 3, svd_result[2]);
+//         // double **US = multiply(3, 3, svd_result[0], 3, 3, svd_result[1]);
+//         // double **A_reconstructed = multiply(3, 3, US, 3, 3, Vt);
+//         // printf("Reconstructed A:\n");
+//         // for (int i = 0; i < 3; i++) {
+//         //     for (int j = 0; j < 3; j++) {
+//         //         printf("%f ", A_reconstructed[i][j]);
+//         //     }
+//         //     printf("\n");
+//         // }
+//     } else {
+//         printf("SVD computation failed\n");
+//     }
+//     return 0;
+// }

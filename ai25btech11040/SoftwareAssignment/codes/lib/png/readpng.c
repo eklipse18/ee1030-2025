@@ -345,13 +345,13 @@ int **readpng(const char *filename, int ihdr_[7]) {
   return array;
 }
 
-/* DEBUG */
-int main(int argc, const char *argv[]) {
-  int ihdr[7];
-  int **data = readpng(argv[1], ihdr);
-  if (data == NULL) {
-    return 1;
-  }
-  free(data);
-  return 0;
-}
+// /* DEBUG */
+// int main(int argc, const char *argv[]) {
+//   int ihdr[7];
+//   int **data = readpng(argv[1], ihdr);
+//   if (data == NULL) {
+//     return 1;
+//   }
+//   free(data);
+//   return 0;
+// }
