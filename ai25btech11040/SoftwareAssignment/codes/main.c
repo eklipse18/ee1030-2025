@@ -49,13 +49,13 @@ int main(int argc, const char *argv[]) {
   free(svd_result);
 
   // DEBUG: print A_k in the block format in lib/png/readpng.c
-  for (int i = 0; i < ihdr[1]; i++) {
-    for (int j = 0; j < ihdr[0]; j++) {
-      printf("\x1B[48;5;%dm  \x1B[0m",
-             232 + (A_k_int[i][j]) * 23 / ((1 << 8) - 1));
-    }
-    printf("\n");
-  }
+  // for (int i = 0; i < ihdr[1]; i++) {
+  //   for (int j = 0; j < ihdr[0]; j++) {
+  //     printf("\x1B[48;5;%dm  \x1B[0m",
+  //            232 + (A_k_int[i][j]) * 23 / ((1 << 8) - 1));
+  //   }
+  //   printf("\n");
+  // }
   savepng("out.png", A_k, ihdr);
   return 0;
 }

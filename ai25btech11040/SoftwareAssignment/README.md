@@ -22,8 +22,8 @@ Where `<input_image.png>` is the path to the input PNG image file, and `<k>` is 
 # Output
 The program will generate a compressed image file named `out.png` in the current directory.
 
-### Mathematical workings and explanations can be found in the `math.md` file included in this repository.
-### To understand the code structure and implementation details, refer to `code.md`
+### Mathematical workings and explanations can be found in the [`math.md`](./math.md) file included in this repository.
+### To understand the code structure and implementation details, refer to [`code.md`](./code.md)
 
 
 # References
