@@ -11,6 +11,7 @@ $$A^T_{n \times m} = \begin{bmatrix} a_{ji} \end{bmatrix}$$
 Any real matrix A of size m x n can be decomposed into three matrices U, S, and V such that
 $$A = U S V^T$$
 Where,
+
 - U is an m x m orthogonal matrix whose columns are the left singular vectors of A
 - S is an m x n diagonal matrix with non-negative real numbers on the diagonal, known as singular values of A
 - V is an n x n orthogonal matrix whose columns are the right singular vectors of A
@@ -24,6 +25,7 @@ A grayscale image can be represented as a 2D matrix where each element correspon
 
 # Image Compression using SVD
 To compress an image using SVD, we can follow these steps:
+
 1. Represent the image as a matrix A.
 2. Perform SVD on matrix A to obtain U, S, and V.
 3. Retain only the top k singular values in matrix S and set the rest to zero. This reduces the rank of the matrix and hence compresses the image.

@@ -1,17 +1,22 @@
 # Reading PNGs
 Reading PNG files byte by byte requires the understanding of the following sections of the file
+
 ### PNG File Signature
 The first 8 bytes of a PNG file are always the same and serve as a signature to identify the file as a PNG image. The signature bytes are:
 ```
 137 80 78 71 13 10 26 10
 ```
+
 ### PNG Chunks
 After our first 8 bytes, PNG files are organized into chunks, each consisting of four parts:
+
 1. Length (4 bytes): Indicates the length of the chunk's data field.
 2. Chunk Type (4 bytes): A 4-character code that identifies the type of chunk.
 3. Chunk Data (variable length): The actual data of the chunk.
 4. CRC (4 bytes): A cyclic redundancy check value for error-checking the chunk type and data. Due to time constraints I have not implemented CRC checking in my code yet.
+
 ### Important Chunk Types
+
 - IHDR: The first chunk in a PNG file, containing image width, height, bit depth, color type, compression method, filter method, and interlace method.
 - IDAT: Contains the actual image data, which is compressed.
 - IEND: Marks the end of the PNG file.
@@ -20,6 +25,7 @@ After our first 8 bytes, PNG files are organized into chunks, each consisting of
 
 ### IHDR Chunk Structure
 The IHDR chunk is 13 bytes long and contains the following fields:
+
 - Width (4 bytes): The width of the image in pixels.
 - Height (4 bytes): The height of the image in pixels.
 - Bit Depth (1 byte): The number of bits per sample or per palette index.
@@ -29,6 +35,7 @@ The IHDR chunk is 13 bytes long and contains the following fields:
 - Interlace Method (1 byte): Indicates whether the image is interlaced (0 for no interlace, 1 for Adam7 interlace).
 
 Due to time constraints, I have implemented only the reading of PNG files with the following specifications:
+
 - Color Type: 0 (Grayscale with no alpha channel)
 - Bit Depth: 8 bits per sample (or 16 bits per sample)
 - No interlacing (Interlace Method: 0)
@@ -36,8 +43,10 @@ Due to time constraints, I have implemented only the reading of PNG files with t
 ### IDAT Chunk and Image Data
 The IDAT chunk contains the compressed image data. The data is compressed using the `DEFLATE` algorithm. We use the `zlib` library to decompress this data due to time-constraints.
 The decompressed image data is organized into scanlines, each preceded by a filter type byte, ie we obtain a flattened 2D array of bytes representing the image. Each row contains a filter type byte followed by the pixel data for that row.
+
 #### Filter Types
 PNG uses five filter types to improve compression:
+
 - Type 0: None: No filtering is applied, ie each byte represents the actual pixel value.
 - Type 1: Sub: Each byte is replaced by the difference between it and the corresponding byte of the prior pixel in the same row. `Raw(x) = (Filtered(x) + Raw(x-1)) % 256`
 - Type 2: Up: Each byte is replaced by the sum of it and the corresponding byte of the prior pixel in the same column. `Raw(x) = (Filtered(x) + Raw(x-Width)) % 256`
@@ -67,6 +76,7 @@ Other chunks like pHYS and tEXt can be present in PNG files, but they are not es
 
 # Performing SVD for the obtained matrix
 To decompose the image matrix using Singular Value Decomposition (SVD), I have used the following algorithm:
+
 1. Compute the covariance matrix $C = A^TA$, where $A$ is the image matrix.
 2. Compute the eigenvalues and eigenvectors of the covariance matrix $C$ using the Jacobi method.
 3. Sort the eigenvalues in descending order and arrange the corresponding eigenvectors accordingly.
@@ -76,6 +86,7 @@ To decompose the image matrix using Singular Value Decomposition (SVD), I have u
 
 ## Jacobi Method for Eigenvalue Decomposition
 The Jacobi method is an iterative algorithm used to compute the eigenvalues and eigenvectors of a symmetric matrix (this works because $A^\mathrm{T}A$ is symmetric). The algorithm works by performing a series of rotations to zero out the off-diagonal elements of the matrix. The steps are as follows:
+
 1. Initialize the eigenvector matrix as the identity matrix.
 2. Repeat until convergence:
    1. Find the largest off-diagonal element in the matrix.
@@ -87,6 +98,7 @@ Here we define the algorithm to converge when the maximum off-diagonal element i
 
 ## Gram-Schmidt Process
 The Gram-Schmidt process is used to orthogonalize a set of vectors. To compute the left singular vectors ($U$), we apply the Gram-Schmidt process to the set of vectors $\{A v_i / \sigma_i\}$:
+
 1. Start with the set of vectors $\{A v_1 / \sigma_1, A v_2 / \sigma_2, \ldots, A v_n / \sigma_n\}$.
 2. For each vector in the set:
    1. Subtract the projections of the vector onto all previously computed orthogonal vectors.
@@ -95,13 +107,15 @@ The Gram-Schmidt process is used to orthogonalize a set of vectors. To compute t
 
 ## K Low-Rank Approximation
 To obtain a rank-$k$ approximation of the original image matrix $A$, we retain only the top $k$ singular values and their corresponding singular vectors:
-1. Construct the diagonal matrix $\\Sigma_k$ by keeping only the top $k$ singular values and setting the rest to zero.
+
+1. Construct the diagonal matrix $\Sigma_k$ by keeping only the top $k$ singular values and setting the rest to zero.
 2. Construct the matrices $U_k$ and $V_k$ by retaining only the first $k$ columns of $U$ and $V$, respectively.
 3. The rank-$k$ approximation of the original matrix $A$ is given by:
 $$A_k = U_k \Sigma_k V_k^T$$
 
 # Saving the compressed image as PNG
 To save the compressed image as a PNG file, we need to reverse the steps taken during the reading process:
+
 1. **Reconstruct the Image Data**: Using the rank-$k$ approximation, reconstruct the image matrix.
 2. **Apply PNG Filters**: Due to time constraints, I have implemented only the "None" filter (Type 0) for simplicity. We can obtain higher compression ratios by implementing other filter types in the future.
 3. **Compress the Image Data**: Use the `zlib` library to compress the filtered image data using the DEFLATE algorithm.
