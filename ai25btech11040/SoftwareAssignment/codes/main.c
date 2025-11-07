@@ -10,6 +10,10 @@ int main(int argc, const char *argv[]) {
   int k;
   sscanf(argv[2], "%d", &k);
   int **array = readpng(argv[1], ihdr);
+  if (!array) {
+    fprintf(stderr, "Failed to read PNG file %s\n", argv[1]);
+    return -1;
+  }
   // convert arr to doubles
   double **double_array = (double **)malloc(ihdr[1] * sizeof(double *));
   for (int i = 0; i < ihdr[1]; i++) {
@@ -52,6 +56,6 @@ int main(int argc, const char *argv[]) {
     }
     printf("\n");
   }
-  //savepng("out.png", A_k, ihdr);
+  savepng("out.png", A_k, ihdr);
   return 0;
 }
