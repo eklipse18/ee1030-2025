@@ -107,3 +107,13 @@ void eigen_decomposition(int n, double **A, double *ev, double **evec) {
   // (n x n) and store them in ev and evec respectively.
   jacobi(A, ev, evec, n);
 }
+
+double frobenius_norm(int m, int n, double **A) {
+  double norm = 0.0;
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      norm += A[i][j] * A[i][j];
+    }
+  }
+  return sqrt(norm);
+}

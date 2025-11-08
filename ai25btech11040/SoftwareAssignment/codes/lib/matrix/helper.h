@@ -13,4 +13,6 @@ void normalize(double *v, int n);
 
 void jacobi(double **A, double *eigvals, double **eigvecs, int n);
 
+double frobenius_norm(int m, int n, double **A);
+
 #endif

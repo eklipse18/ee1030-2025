@@ -8,7 +8,7 @@ sudo apt-get install zlib1g-dev libpng-dev
 # Compilation
 To compile the code, use the following command:
 ```bash
-clang main.c lib/*/*.c -lm -lz -lpng
+clang main.c lib/*/*.c -lm -lz -lpng -O3
 ```
 If you prefer using the clang compiler. This will link all the necessary libraries, and produce an executable named `a.out`.
 

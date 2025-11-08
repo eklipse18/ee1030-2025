@@ -2,6 +2,7 @@
 #include "lib/matrix/svd.h"
 #include "lib/png/readpng.h"
 #include "lib/png/savepng.h"
+#include "lib/matrix/helper.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,6 +32,19 @@ int main(int argc, const char *argv[]) {
       A_k_int[i][j] = (int)A_k[i][j];
     }
   }
+
+  // Frobenius norm calculation
+  double **diff_arr = (double **)malloc(ihdr[1] * sizeof(double *));
+  for (int i = 0; i < ihdr[1]; i++) {
+    diff_arr[i] = (double *)malloc(ihdr[0] * sizeof(double));
+    for (int j = 0; j < ihdr[0]; j++) {
+      diff_arr[i][j] = array[i][j] - A_k_int[i][j];
+    }
+  }
+  double frob_norm = frobenius_norm(ihdr[1], ihdr[0], diff_arr);
+  printf("Frobenius norm of the difference between original and A_k: %.5lf\n",
+         frob_norm);
+  printf("Frobenius norm error per pixel: %.5lf\n", frob_norm / (ihdr[1] * ihdr[0]));
 
   // free memory
   for (int i = 0; i < ihdr[1]; i++) {

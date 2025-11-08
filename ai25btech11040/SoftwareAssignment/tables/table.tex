@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+
+\title{Tables and data analysis}
+\author{Vivaan Parashar - AI25BTECH11040}
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\begin{document}
+\maketitle
+Note: $\norm{\vec{A}}$ of a matrix $\vec{A}$ denotes its Frobenius norm, ie:
+\[\norm{\vec{A}} = \sqrt{\sum_i\sum_j |a_{ij}|^2}\]
+
+\section{Tables}
+
+\subsection{Error by Frobenius norm}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Image name    & $k$ & $\norm{\vec{A}-\vec{A_\mathrm{c}}}$ \\
+        \hline
+        einstein.png  & 80  & 363.79527                           \\
+        einstein.png  & 40  & 1168.53798                          \\
+        einstein.png  & 30  & 1572.21786                          \\
+        einstein.png  & 20  & 2129.10169                          \\
+        einstein.png  & 10  & 3250.57103                          \\\hline
+        globe.png     & 20  & 3259.34411                          \\
+        globe.png     & 10  & 4934.48761                          \\\hline
+        greyscale.png & 20  & 1012.42629                          \\
+        greyscale.png & 10  & 2512.75645                          \\\hline
+        test.png      & 20  & 1004.19470                          \\
+        test.png      & 10  & 1546.89140                          \\
+        \hline
+    \end{tabular}
+    \caption{Table with images and error}
+    \label{tab:tab1}
+\end{table}
+
+\subsection{Error by Frobenius norm per pixel}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Image name    & $k$ & Resolution & Pixels & $\frac{\norm{\vec{A}-\vec{A_\mathrm{c}}}}{\text{Pixels}}$ \\
+        \hline
+        einstein.png  & 80  & 186x182    & 33852  & 0.01075                                                   \\
+        einstein.png  & 40  & 186x182    & 33852  & 0.03452                                                   \\
+        einstein.png  & 30  & 186x182    & 33852  & 0.04644                                                   \\
+        einstein.png  & 20  & 186x182    & 33852  & 0.06289                                                   \\
+        einstein.png  & 10  & 186x182    & 33852  & 0.09602                                                   \\\hline
+        globe.png     & 20  & 300x314    & 94200  & 0.03460                                                   \\
+        globe.png     & 10  & 300x314    & 94200  & 0.05238                                                   \\\hline
+        greyscale.png & 20  & 512x512    & 100000 & 0.00386                                                   \\
+        greyscale.png & 10  & 512x512    & 100000 & 0.00959                                                   \\\hline
+        test.png      & 20  & 100x80     & 8000   & 0.12099                                                   \\
+        test.png      & 10  & 100x80     & 8000   & 0.18637                                                   \\
+        \hline
+    \end{tabular}
+    \caption{Previous table, but with error per number of pixels}
+    \label{tab:tab2}
+\end{table}
+
+\section{Plots and analysis}
+
+\subsection{Frobenius error}
+From Fig. \ref{fig:error_plot}, we can see that as $k$ increases, the error decreases. This is expected, as a higher value of $k$ means more singular values are retained in the compressed image, leading to a closer approximation of the original image. The relationship appears to be non-linear, with diminishing returns as $k$ increases. One thing to notice though is that this is not consistent across image sizes, which makes sense. As a larger resolution image has a greater number of entries, both its Frobenius norm and the Frobenius norm of the error array should be higher as more entries are included in the sum, and there is no term (for example dividing by the number of pixels) to account for the size of the arrays.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/frobenius_error_plot.png}
+    \caption{Error by Frobenius norm}
+    \label{fig:error_plot}
+\end{figure}
+
+\subsection{Frobenius error per pixel}
+From Fig. \ref{fig:error_plot_pp}, we can see that as $k$ increases, the error decreases, and this is uniform for all images. This is expected for the same reasons, except in this case no two lines intersect, whereas previously the lines represented by \texttt{greyscale.png} and \texttt{test.png} seemed to intersect.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/frobenius_error_plot_pp.png}
+    \caption{Error by Frobenius norm per pixel}
+    \label{fig:error_plot_pp}
+\end{figure}
+\end{document}
